@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { priorityScore, readiness, safeCell, compact } from '../src/app/core/rules.ts';
+import { SEED_IDEAS, OBJECTIVES } from '../src/app/core/seed.ts';
+test('weighted priority ranges from 20 to 100',()=>{const all=n=>({alignment:n,customer:n,value:n,risk:n,feasibility:n,urgency:n});assert.equal(priorityScore(all(1)),20);assert.equal(priorityScore(all(5)),100);assert.equal(priorityScore(all(3)),60);});
+test('strategic alignment has a 25 percent weight',()=>{assert.equal(priorityScore({alignment:5,customer:1,value:1,risk:1,feasibility:1,urgency:1}),40);});
+test('forum sample records pass readiness',()=>{for(const i of SEED_IDEAS.filter(i=>i.status==='Demand forum'))assert.deepEqual(readiness(i),[]);});
+test('new demand cannot pass readiness without assurance',()=>{const i=SEED_IDEAS.find(i=>i.status==='New');assert.ok(readiness(i).includes('Delivery team consultation required'));assert.ok(readiness(i).includes('Assurance check required'));});
+test('blank concept and nonpositive investment are flagged',()=>{assert.ok(readiness({...SEED_IDEAS[0],concept:'',cost:0}).includes('Concept required'));assert.ok(readiness({...SEED_IDEAS[0],cost:0}).includes('Positive cost estimate required'));});
+test('sample identifiers are unique and objectives resolve',()=>{assert.equal(new Set(SEED_IDEAS.map(i=>i.id)).size,SEED_IDEAS.length);for(const i of SEED_IDEAS)assert.ok(OBJECTIVES.some(o=>o.id===i.objective));});
+test('seed amounts and scores are valid',()=>{for(const i of SEED_IDEAS){assert.ok(i.cost>=0&&i.benefit>=0);for(const v of Object.values(i.scores))assert.ok(v>=1&&v<=5);}});
+test('CSV cells quote embedded quotes and neutralise formulas',()=>{assert.equal(safeCell('a"b'),`"a""b"`);assert.equal(safeCell('=SUM(A1)'),`"'=SUM(A1)"`);assert.equal(safeCell('@test'),`"'@test"`);});
+test('compact currency formatting',()=>{assert.equal(compact(125000),'$125k');assert.equal(compact(2500000),'$2.50m');});

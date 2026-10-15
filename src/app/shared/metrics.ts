@@ -1,0 +1,6 @@
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Store } from '../core/store';
+import { compact } from '../core/rules';
+import { Icon } from './icon';
+@Component({selector:'app-metrics',imports:[Icon],changeDetection:ChangeDetectionStrategy.OnPush,template:`<section class="metrics" aria-label="Portfolio key metrics"><article class="metric"><div class="metric-top">Ideas in pipeline<app-icon name="idea"/></div><strong>{{s.active().length}}</strong><span><i class="dot green-dot"></i>Active opportunities</span></article><article class="metric"><div class="metric-top">Awaiting forum<app-icon name="clock"/></div><strong>{{s.forum().length}}</strong><span>Ready for a decision</span></article><article class="metric"><div class="metric-top">Approved investments<app-icon name="shield"/></div><strong>{{s.approved().length}}</strong><span>Approved, delivering or complete</span></article><article class="metric highlight"><div class="metric-top">Expected annual benefit<app-icon name="trend"/></div><strong>{{compact(s.totalBenefit())}}</strong><span>Estimates, excluding cancelled ideas</span></article></section>`})
+export class Metrics {readonly s=inject(Store);readonly compact=compact;}
