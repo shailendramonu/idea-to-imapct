@@ -10,7 +10,7 @@ import { Icon } from "../shared/icon";
   template: `
     <div class="page-heading">
       <div>
-        <div class="eyebrow">OUR NORTH STAR</div>
+        <div class="eyebrow">DEMAND GROUP</div>
         <h1>Strategy, made actionable.</h1>
         <p>
           Give every investment a purpose and every objective a path to impact.
@@ -19,7 +19,7 @@ import { Icon } from "../shared/icon";
       <span class="year-chip"><app-icon name="calendar" />FY 2026–27</span>
     </div>
     <section class="strategy-banner">
-      <span class="eyebrow">NORTHSTAR GROUP · STRATEGIC AMBITION</span>
+      <span class="eyebrow">DEMAND GROUP · STRATEGIC AMBITION</span>
       <h2>
         Build a smarter, stronger business.<br /><em
           >Create value that lasts.</em
