@@ -1,0 +1,1 @@
+var e=[`New`,`Initial review`,`Client engagement`,`Demand forum`,`Preparing proposal`,`Sponsor review`,`Approved`,`Delivery`,`Completed`,`On hold`,`Cancelled`];export{e as t};
